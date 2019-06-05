@@ -1,0 +1,28 @@
+
+<!--- Jumbotron -->
+<div class="container-fluid">
+  <div class="row jumbotron text-center">
+    <div class="col-12">
+      <h1 class="display-2">Sports News</h1>
+    </div>
+    <div class="col-12">
+      <h2 class="display-5">The lastest sports news</h2>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    {{#each articles}}
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <img src="{{image}}" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{headline}}</h5>
+          <a href="{{url}}" target="_blank" class="btn btn-primary">View Article</a>
+        </div>
+      </div>
+    </div>
+    {{/each}} 
+  </div>
+</div>
