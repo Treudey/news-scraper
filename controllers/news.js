@@ -54,7 +54,10 @@ exports.scrapeSites = (req, res) => {
       // Add the text and href of every link, and save them as properties of the result object
       const link = $(element).find("h3").children().attr("href") || $(element).find("h4").children().attr("href");;
       const title = $(element).find("h3").children().text() || $(element).find("h4").children().text();
-      const img = $(element).find("img").attr("src");
+      let img = $(element).find("img").attr("src");
+
+      // filter out low quality images
+      if (img.includes('115x115')) img = false;
 
       if (title && link && img) {
         // Save an empty result object

@@ -16,4 +16,8 @@
 
 .card-title { font-weight: bold; }
 
-.card-body { height: 9rem; }
+.card-body { min-height: 9rem; }
+
+form {
+    margin-top: 1rem;
+}
