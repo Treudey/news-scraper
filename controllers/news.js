@@ -26,23 +26,6 @@ const addArticle = (articleObj) => {
   });
 };
 
-exports.getArticles = (req, res) => {
-  db.Article.find({})
-    .then(dbArticles => {
-      // If any Articles are found, send them to the client
-      const hbsObj = {
-        articles: dbArticles,
-        pageTitle: 'Articles'
-      }
-      
-      res.render('index', hbsObj);
-    })
-    .catch(err =>{
-      // If an error occurs, send it back to the client
-      if (err) throw err;
-    });
-};
-
 exports.scrapeSites = (req, res) => {
   // First, we grab the bodies of the html with axios
   axios.get("https://www.sportsnet.ca/").then(response => {
@@ -57,10 +40,10 @@ exports.scrapeSites = (req, res) => {
       let img = $(element).find("img").attr("src");
 
       // filter out low quality images
-      if (img.includes('115x115')) img = false;
+      if (!img || img.includes('115x115')) img = false;
 
       if (title && link && img) {
-        // Save an empty result object
+        // Creat an empty result object and fill with article props
         const result = {};
         result.url = link;
         result.headline = title;
@@ -83,7 +66,7 @@ exports.scrapeSites = (req, res) => {
       const img = $(element).find("img.media-wrapper_image").data("default-src") || $(element).find("img").attr("src");
 
       if (link && img && title) {
-        // Save an empty result object
+        // Creat an empty result object and fill with article props
         const result = {};
         result.url = link.includes("https") ? link : 'https://www.espn.com' + link;
         result.headline = title;
@@ -96,4 +79,22 @@ exports.scrapeSites = (req, res) => {
     // Send a message to the client
     res.send("Scrape Complete");
   });
+};
+
+exports.getArticles = (req, res) => {
+  db.Article.find({})
+    .populate('comments')
+    .then(dbArticles => {
+      // If any Articles are found, send them to the client
+      const hbsObj = {
+        articles: dbArticles,
+        pageTitle: 'Articles'
+      }
+      
+      res.render('index', hbsObj);
+    })
+    .catch(err =>{
+      // If an error occurs, send it back to the client
+      if (err) throw err;
+    });
 };

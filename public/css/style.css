@@ -18,6 +18,19 @@
 
 .card-body { min-height: 9rem; }
 
-form {
+.list-group {
+    margin: .5rem;
+}
+
+.remove {
+    color: #ff1744;
+    font-size: 2.5rem;
+    position: absolute;
+    top: -.5rem;
+    right: 1rem;
+    cursor: pointer;
+  }
+
+  form {
     margin-top: 1rem;
 }

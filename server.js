@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 
 const newsController = require('./controllers/news');
+const apiController = require('./controllers/api');
 
 const connectionString = 'mongodb+srv://alex:67ECNUeIAsc30u04@cluster0-ofcaa.mongodb.net/scraper?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 3000;
@@ -39,6 +40,9 @@ app.get("/", newsController.getArticles);
 
 // A GET route for scraping the sports news websites
 app.get("/scrape", newsController.scrapeSites);
+
+// A POST route for adding a Comment
+app.post("/api/add-comment", apiController.postComment);
 
 // Start Server
 app.listen(PORT, () => {
