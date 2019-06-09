@@ -13,10 +13,10 @@ const CommentSchema = new Schema({
     required: true,
     trim: true,
     validate: [
-      function(input) {
-        return input.length <= 145;
+      (input) => {
+        return input.length <= 280;
       },
-      "Your comment can only be max 145 characters long."
+      'Your comment can only be max 145 characters long.'
     ]
   }
 });

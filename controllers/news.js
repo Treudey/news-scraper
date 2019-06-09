@@ -11,13 +11,13 @@ const addArticle = (articleObj) => {
  
     //check if the article was found
     if (article) {
-      console.log('Article already exists');
+      return;
     } else {
       //code if no user with entered email was found
       // Create a new Article using the `result` object built from scraping
       db.Article.create(articleObj)
         .then(dbArticle => {
-          console.log(dbArticle);
+          return;
         })
         .catch(err => {
           if (err) console.log(err);
@@ -28,16 +28,16 @@ const addArticle = (articleObj) => {
 
 const scrapeSites = () => {
   // First, we grab the bodies of the html with axios
-  axios.get("https://www.sportsnet.ca/").then(response => {
+  axios.get('https://www.sportsnet.ca/').then(response => {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     const $ = cheerio.load(response.data);
 
-    $(".post").each((i, element) => {
+    $('.post').each((i, element) => {
       
       // Add the text and href of every link, and save them as properties of the result object
-      const link = $(element).find("h3").children().attr("href") || $(element).find("h4").children().attr("href");;
-      const title = $(element).find("h3").children().text() || $(element).find("h4").children().text();
-      let img = $(element).find("img").attr("src");
+      const link = $(element).find('h3').children().attr('href') || $(element).find('h4').children().attr('href');;
+      const title = $(element).find('h3').children().text() || $(element).find('h4').children().text();
+      let img = $(element).find('img').attr('src');
 
       // filter out low quality images
       if (!img || img.includes('115x115')) img = false;
@@ -54,21 +54,21 @@ const scrapeSites = () => {
     });
   });
 
-  axios.get("https://www.espn.com/").then(response => {
+  axios.get('https://www.espn.com/').then(response => {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     const $ = cheerio.load(response.data);
 
-    $(".contentItem__content--story").each((i, element) => {
+    $('.contentItem__content--story').each((i, element) => {
       
       // Add the text and href of every link, and save them as properties of the result object
-      const link = $(element).find("a").attr("href");
-      const title = $(element).find("h1").text();
-      const img = $(element).find("img.media-wrapper_image").data("default-src") || $(element).find("img").attr("src");
+      const link = $(element).find('a').attr('href');
+      const title = $(element).find('h1').text();
+      const img = $(element).find('img.media-wrapper_image').data('default-src') || $(element).find('img').attr('src');
 
       if (link && img && title) {
         // Creat an empty result object and fill with article props
         const result = {};
-        result.url = link.includes("https") ? link : 'https://www.espn.com' + link;
+        result.url = link.includes('https') ? link : 'https://www.espn.com' + link;
         result.headline = title;
         result.image = img;
 
