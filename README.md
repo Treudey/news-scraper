@@ -9,7 +9,7 @@ A web app that lets users view and leave comments on the latest news
 
 ### Live Site
 
-https://dashboard.heroku.com/apps/powerful-ocean-42270
+https://powerful-ocean-42270.herokuapp.com/
 
 ### Technologies and Frameworks
 * Node.js
