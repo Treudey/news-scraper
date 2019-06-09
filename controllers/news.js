@@ -20,7 +20,7 @@ const addArticle = (articleObj) => {
           console.log(dbArticle);
         })
         .catch(err => {
-          if (err) throw err;
+          if (err) console.log(err);
         });
     }
   });
@@ -100,6 +100,6 @@ exports.getArticles = (req, res) => {
     })
     .catch(err =>{
       // If an error occurs, send it back to the client
-      if (err) throw err;
+      if (err) console.log(err);
     });
 };

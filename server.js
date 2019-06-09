@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 
 const newsController = require('./controllers/news');
-const apiController = require('./controllers/api');
+const commentController = require('./controllers/comment');
 
-const connectionString = 'mongodb+srv://alex:67ECNUeIAsc30u04@cluster0-ofcaa.mongodb.net/scraper?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlines';
 const PORT = process.env.PORT || 3000;
 
 // Initialize Express
@@ -31,20 +31,22 @@ app.engine(
 app.set('view engine', 'hbs');
 
 // Connect to the Mongo DB
-mongoose.connect(connectionString, { useNewUrlParser: true, useFindAndModify: false });
+console.log(mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useFindAndModify: false }));
 
 // Routes
 
 // A GET route for scraping the sports news websites
 app.get("/", newsController.getIndex);
 
-// Route for getting all Articles from the db
+// A GET route for fetching all Articles from the db
 app.get("/articles", newsController.getArticles);
 
 // A POST route for adding a Comment
-app.post("/api/add-comment", apiController.postComment);
+app.post("/api/add-comment", commentController.postComment);
 
-app.post('/api/delete-comment', apiController.deleteComment);
+// A POST route for deleting a comment
+app.post('/api/delete-comment', commentController.deleteComment);
+
 // Start Server
 app.listen(PORT, () => {
   console.log('App running on port ' + PORT + '!');

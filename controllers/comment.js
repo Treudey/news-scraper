@@ -18,7 +18,7 @@ exports.postComment = (req, res) => {
       res.redirect('/articles');
     })
     .catch(err => {
-      if (err) throw err;
+      if (err) console.log(err);
     });
 };
 
@@ -36,6 +36,6 @@ exports.deleteComment = (req, res) => {
       res.redirect('/articles');
     })
     .catch(err => {
-      if (err) throw err;
+      if (err) console.log(err);
     });
 }
