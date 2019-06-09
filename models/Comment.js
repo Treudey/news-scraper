@@ -3,8 +3,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
-  title: String,
-  body: String
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  body: {
+    type: String,
+    required: true,
+    trim: true,
+    validate: [
+      function(input) {
+        return input.length <= 145;
+      },
+      "Your comment can only be max 145 characters long."
+    ]
+  }
 });
 
 const Comment = mongoose.model('Comment', CommentSchema);

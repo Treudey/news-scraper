@@ -31,7 +31,7 @@ app.engine(
 app.set('view engine', 'hbs');
 
 // Connect to the Mongo DB
-mongoose.connect(connectionString, { useNewUrlParser: true });
+mongoose.connect(connectionString, { useNewUrlParser: true, useFindAndModify: false });
 
 // Routes
 
@@ -44,6 +44,7 @@ app.get("/scrape", newsController.scrapeSites);
 // A POST route for adding a Comment
 app.post("/api/add-comment", apiController.postComment);
 
+app.post('/api/delete-comment', apiController.deleteComment);
 // Start Server
 app.listen(PORT, () => {
   console.log('App running on port ' + PORT + '!');

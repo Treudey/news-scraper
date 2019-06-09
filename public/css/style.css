@@ -23,14 +23,20 @@
 }
 
 .remove {
+    background: inherit;
     color: #ff1744;
+    font-family: inherit;
     font-size: 2.5rem;
     position: absolute;
-    top: -.5rem;
+    top: 0;
     right: 1rem;
-    cursor: pointer;
-  }
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    border: none;
+    overflow: visible;
+}
 
-  form {
+.comment-form {
     margin-top: 1rem;
 }

@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const ArticleSchema = new Schema({
   headline: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   image: {
     type: String,
