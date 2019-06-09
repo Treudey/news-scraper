@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 
 const db = require('../models');
 
-// private helper functions
+// Private helper functions
 const addArticle = (articleObj) => {
   db.Article.findOne({ headline: articleObj.headline }, (err, article) => {
          
@@ -26,7 +26,7 @@ const addArticle = (articleObj) => {
   });
 };
 
-exports.scrapeSites = (req, res) => {
+const scrapeSites = () => {
   // First, we grab the bodies of the html with axios
   axios.get("https://www.sportsnet.ca/").then(response => {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -75,10 +75,15 @@ exports.scrapeSites = (req, res) => {
         addArticle(result);
       }
     });
-
-    // Send a message to the client
-    res.send("Scrape Complete");
   });
+};
+
+exports.getIndex = (req, res) => {
+  // scapes sports news sites and adds to db
+  scrapeSites();
+  // The render main splash page
+  res.render('index', { pageTitle: 'Home | Sports News' });
+  
 };
 
 exports.getArticles = (req, res) => {
@@ -87,11 +92,11 @@ exports.getArticles = (req, res) => {
     .then(dbArticles => {
       // If any Articles are found, send them to the client
       const hbsObj = {
-        articles: dbArticles,
-        pageTitle: 'Articles'
+        articles: dbArticles.reverse(),
+        pageTitle: 'Articles | Sports News'
       }
       
-      res.render('index', hbsObj);
+      res.render('articles', hbsObj);
     })
     .catch(err =>{
       // If an error occurs, send it back to the client

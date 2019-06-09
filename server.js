@@ -35,11 +35,11 @@ mongoose.connect(connectionString, { useNewUrlParser: true, useFindAndModify: fa
 
 // Routes
 
-// Route for getting all Articles from the db
-app.get("/", newsController.getArticles);
-
 // A GET route for scraping the sports news websites
-app.get("/scrape", newsController.scrapeSites);
+app.get("/", newsController.getIndex);
+
+// Route for getting all Articles from the db
+app.get("/articles", newsController.getArticles);
 
 // A POST route for adding a Comment
 app.post("/api/add-comment", apiController.postComment);

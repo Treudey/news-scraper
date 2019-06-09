@@ -15,7 +15,7 @@ exports.postComment = (req, res) => {
     })
     .then(() => {
       // If the Article was updated successfully, reload the main page
-      res.redirect('/');
+      res.redirect('/articles');
     })
     .catch(err => {
       if (err) throw err;
@@ -33,7 +33,7 @@ exports.deleteComment = (req, res) => {
     })
     .then(() => {
       // If the Article was updated successfully, reload the main page
-      res.redirect('/');
+      res.redirect('/articles');
     })
     .catch(err => {
       if (err) throw err;
